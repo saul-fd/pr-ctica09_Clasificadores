@@ -1,6 +1,6 @@
 """
 Dashboard Práctica 09 - Clasificadores de Rotación de Personal
-Equipo 12
+Equipo 12 | Solo usa: streamlit, pandas, numpy
 """
 
 import streamlit as st
@@ -172,7 +172,7 @@ elif seccion == "🧪 Explorar modelo":
             "Categoría": ["Verdadero Positivo (TP)", "Verdadero Negativo (TN)", "Falso Positivo (FP)", "Falso Negativo (FN)"],
             "Cantidad":  [tp, tn, fp, fn],
         }).set_index("Categoría")
-        st.bar_chart(breakdown_df, height=220, color=["#34d399", "#34d399", "#f87171", "#f87171"])
+        st.bar_chart(breakdown_df, height=220, color="#7dd3fc")
 
     st.markdown("---")
 
@@ -261,7 +261,7 @@ elif seccion == "📈 Comparativa":
         "Diferencia": [round(da[m]-db[m], 4) for m in metricas],
     }).set_index("Métrica")
     st.dataframe(diff_df.style.format("{:.4f}")
-        .applymap(lambda v: "color: #34d399" if v > 0 else "color: #f87171"),
+        .map(lambda v: "color: #34d399" if v > 0 else "color: #f87171"),
         use_container_width=True)
 
 
