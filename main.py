@@ -9,7 +9,7 @@ import numpy as np
 
 st.set_page_config(
     page_title="Práctica 09 · Clasificadores",
-    page_icon="🤖",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -48,14 +48,13 @@ RESULTADOS = {
 
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### 🤖 Práctica 09")
+    st.markdown("### Práctica 09")
     st.markdown("**Clasificadores · Equipo 12**")
     st.markdown("---")
     seccion = st.radio("", [
-        "🏠 Resumen general",
-        "🧪 Explorar modelo",
-        "📈 Comparativa",
-        "🔬 Análisis crítico",
+        "Resumen general",
+        "Explorar modelo",
+        "Comparativa",
     ])
     st.markdown("---")
     st.markdown("""<div style='font-size:12px;color:#475569;'>
@@ -67,9 +66,9 @@ with st.sidebar:
 
 
 # ══════════════════════════════════════════════════════════════════
-# 🏠 RESUMEN GENERAL
+# RESUMEN GENERAL
 # ══════════════════════════════════════════════════════════════════
-if seccion == "🏠 Resumen general":
+if seccion == "Resumen general":
     st.markdown("""
     <div style='background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #1e293b;border-radius:16px;padding:28px;margin-bottom:20px;'>
         <p style='font-family:Space Mono;font-size:10px;color:#7dd3fc;letter-spacing:3px;margin:0 0 6px;'>PRÁCTICA 09 · EQUIPO 12</p>
@@ -85,56 +84,53 @@ if seccion == "🏠 Resumen general":
     c4.metric("Mejor F1-Score", "43.75%", "Naive Bayes")
 
     st.markdown("---")
-    st.markdown("## Distribución de clases (Attrition)")
+    col1, col2 = st.columns([1, 1])
 
-    clase_df = pd.DataFrame({
-        "Clase": ["No renuncia (0)", "Renuncia (1)"],
-        "Cantidad": [1233, 237],
-    })
-    st.bar_chart(clase_df.set_index("Clase"), height=280, color="#7dd3fc")
+    with col1:
+        st.markdown("## Distribución de clases (Attrition)")
+        clase_df = pd.DataFrame({
+            "Clase": ["No renuncia (0)", "Renuncia (1)"],
+            "Cantidad": [1233, 237],
+        }).set_index("Clase")
+        st.bar_chart(clase_df, height=260, color="#7dd3fc")
+        st.markdown("""<div class='card' style='border-left:3px solid #fbbf24;'>
+            <b>Desbalance severo: 83.9% vs 16.1%</b><br>
+            <span style='color:#94a3b8;font-size:13px;'>La mayoría de modelos aprenden a predecir
+            "No renuncia" casi siempre, inflando el Accuracy pero perjudicando el Recall.</span>
+        </div>""", unsafe_allow_html=True)
 
-    st.markdown("""<div class='card' style='border-left:3px solid #fbbf24; margin-top:8px;'>
-        ⚠️ <b>Desbalance severo: 83.9% vs 16.1%</b> — La mayoría de modelos aprenden a predecir
-        "No renuncia" casi siempre, inflando el Accuracy pero perjudicando el Recall de la clase positiva.
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown("---")
-    st.markdown("## Ranking de modelos por F1-Score")
-    df_rank = pd.DataFrame([
-        {"Modelo": m, "Accuracy": d["accuracy"], "Precision": d["precision"],
-         "Recall": d["recall"], "F1-Score": d["f1"]}
-        for m, d in RESULTADOS.items()
-    ]).sort_values("F1-Score", ascending=False).reset_index(drop=True)
-    df_rank.index += 1
-
-    st.bar_chart(
-        df_rank.set_index("Modelo")[["F1-Score"]],
-        height=300,
-        color="#34d399",
-    )
-    st.dataframe(
-        df_rank.style.format({"Accuracy":"{:.4f}","Precision":"{:.4f}","Recall":"{:.4f}","F1-Score":"{:.4f}"})
-            .highlight_max(axis=0, color="#14432a")
-            .highlight_min(axis=0, color="#3d1010"),
-        use_container_width=True,
-    )
+    with col2:
+        st.markdown("## Ranking por F1-Score")
+        df_rank = pd.DataFrame([
+            {"Modelo": m, "Accuracy": d["accuracy"], "Precision": d["precision"],
+             "Recall": d["recall"], "F1-Score": d["f1"]}
+            for m, d in RESULTADOS.items()
+        ]).sort_values("F1-Score", ascending=False).reset_index(drop=True)
+        df_rank.index += 1
+        st.bar_chart(df_rank.set_index("Modelo")[["F1-Score"]], height=260, color="#34d399")
+        st.dataframe(
+            df_rank.style
+                .format({"Accuracy":"{:.4f}","Precision":"{:.4f}","Recall":"{:.4f}","F1-Score":"{:.4f}"})
+                .highlight_max(axis=0, color="#14432a")
+                .highlight_min(axis=0, color="#3d1010"),
+            use_container_width=True,
+            height=320,
+        )
 
 
 # ══════════════════════════════════════════════════════════════════
-# 🧪 EXPLORAR MODELO
+# EXPLORAR MODELO
 # ══════════════════════════════════════════════════════════════════
-elif seccion == "🧪 Explorar modelo":
-    st.markdown("## 🧪 Explorar modelo")
+elif seccion == "Explorar modelo":
+    st.markdown("## Explorar modelo")
 
     modelo_sel = st.selectbox(
         "Selecciona un modelo:",
         list(RESULTADOS.keys()),
-        format_func=lambda x: f"★ {x}" if x == "Random Forest" else x,
     )
     d = RESULTADOS[modelo_sel]
     st.markdown("---")
 
-    # Métricas
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Accuracy",  f"{d['accuracy']:.4f}")
     c2.metric("Precision", f"{d['precision']:.4f}")
@@ -147,56 +143,50 @@ elif seccion == "🧪 Explorar modelo":
     with col1:
         st.markdown("#### Perfil de métricas")
         perfil_df = pd.DataFrame({
-            "Métrica":  ["Accuracy", "Precision", "Recall", "F1-Score"],
-            "Valor":    [d["accuracy"], d["precision"], d["recall"], d["f1"]],
+            "Métrica": ["Accuracy", "Precision", "Recall", "F1-Score"],
+            "Valor":   [d["accuracy"], d["precision"], d["recall"], d["f1"]],
         }).set_index("Métrica")
         st.bar_chart(perfil_df, height=300, color="#7dd3fc")
 
-    with col2:
-        st.markdown("#### Matriz de confusión")
+        st.markdown("#### Desglose de predicciones")
         tp, fp, fn, tn = d["tp"], d["fp"], d["fn"], d["tn"]
-        total = tp + fp + fn + tn
+        breakdown_df = pd.DataFrame({
+            "Categoria": ["Verdadero Positivo (TP)", "Verdadero Negativo (TN)", "Falso Positivo (FP)", "Falso Negativo (FN)"],
+            "Cantidad":  [tp, tn, fp, fn],
+        }).set_index("Categoria")
+        st.bar_chart(breakdown_df, height=260, color="#7dd3fc")
 
-        # Tabla con emojis para hacerla visual
+    with col2:
+        st.markdown("#### Matriz de confusion")
+        total = tp + fp + fn + tn
         cm_df = pd.DataFrame(
             {
-                "Pred: No (0)": [f"✅ TN = {tn}  ({tn/total*100:.1f}%)", f"❌ FN = {fn}  ({fn/total*100:.1f}%)"],
-                "Pred: Yes (1)": [f"❌ FP = {fp}  ({fp/total*100:.1f}%)", f"✅ TP = {tp}  ({tp/total*100:.1f}%)"],
+                "Pred: No (0)": [f"TN = {tn}  ({tn/total*100:.1f}%)", f"FN = {fn}  ({fn/total*100:.1f}%)"],
+                "Pred: Yes (1)": [f"FP = {fp}  ({fp/total*100:.1f}%)", f"TP = {tp}  ({tp/total*100:.1f}%)"],
             },
             index=["Real: No (0)", "Real: Yes (1)"],
         )
-        st.dataframe(cm_df, use_container_width=True)
+        st.dataframe(cm_df, use_container_width=True, height=105)
 
-        st.markdown("#### Desglose de predicciones")
-        breakdown_df = pd.DataFrame({
-            "Categoría": ["Verdadero Positivo (TP)", "Verdadero Negativo (TN)", "Falso Positivo (FP)", "Falso Negativo (FN)"],
-            "Cantidad":  [tp, tn, fp, fn],
-        }).set_index("Categoría")
-        st.bar_chart(breakdown_df, height=220, color="#7dd3fc")
-
-    st.markdown("---")
-
-    # Comparación con todos los modelos en esa métrica
-    st.markdown("#### ¿Cómo se compara este modelo en cada métrica?")
-    tabs = st.tabs(["Accuracy", "Precision", "Recall", "F1-Score"])
-    for tab, met in zip(tabs, ["accuracy", "precision", "recall", "f1"]):
-        with tab:
-            df_met = pd.DataFrame({
-                "Modelo": list(RESULTADOS.keys()),
-                "Valor":  [RESULTADOS[m][met] for m in RESULTADOS],
-            }).sort_values("Valor", ascending=False).set_index("Modelo")
-            # Resaltar el seleccionado
-            st.bar_chart(df_met, height=270, color="#7dd3fc")
-            val_sel = RESULTADOS[modelo_sel][met]
-            rank = sorted([RESULTADOS[m][met] for m in RESULTADOS], reverse=True).index(val_sel) + 1
-            st.caption(f"**{modelo_sel}** ocupa el puesto **#{rank}** con {val_sel:.4f}")
+        st.markdown("#### Comparativa por metrica")
+        tabs = st.tabs(["Accuracy", "Precision", "Recall", "F1-Score"])
+        for tab, met in zip(tabs, ["accuracy", "precision", "recall", "f1"]):
+            with tab:
+                df_met = pd.DataFrame({
+                    "Modelo": list(RESULTADOS.keys()),
+                    "Valor":  [RESULTADOS[m][met] for m in RESULTADOS],
+                }).sort_values("Valor", ascending=False).set_index("Modelo")
+                st.bar_chart(df_met, height=250, color="#7dd3fc")
+                val_sel = RESULTADOS[modelo_sel][met]
+                rank = sorted([RESULTADOS[m][met] for m in RESULTADOS], reverse=True).index(val_sel) + 1
+                st.caption(f"{modelo_sel} ocupa el puesto #{rank} con {val_sel:.4f}")
 
 
 # ══════════════════════════════════════════════════════════════════
-# 📈 COMPARATIVA
+# COMPARATIVA
 # ══════════════════════════════════════════════════════════════════
-elif seccion == "📈 Comparativa":
-    st.markdown("## 📈 Comparativa de modelos")
+elif seccion == "Comparativa":
+    st.markdown("## Comparativa de modelos")
 
     modelos = list(RESULTADOS.keys())
     df_all = pd.DataFrame([
@@ -205,7 +195,6 @@ elif seccion == "📈 Comparativa":
         for m, d in RESULTADOS.items()
     ]).set_index("Modelo")
 
-    # Tabla con highlight
     st.markdown("#### Tabla comparativa")
     st.dataframe(
         df_all.sort_values("F1-Score", ascending=False)
@@ -213,34 +202,29 @@ elif seccion == "📈 Comparativa":
             .highlight_max(axis=0, color="#14432a")
             .highlight_min(axis=0, color="#3d1010"),
         use_container_width=True,
+        height=330,
     )
     st.markdown("---")
 
-    # Gráficas por métrica en 2x2
-    st.markdown("#### Comparativa por métrica")
+    st.markdown("#### Comparativa por metrica")
     col1, col2 = st.columns(2)
-
     with col1:
         st.markdown("**Accuracy**")
-        st.bar_chart(df_all[["Accuracy"]].sort_values("Accuracy"), height=260, color="#7dd3fc")
+        st.bar_chart(df_all[["Accuracy"]].sort_values("Accuracy"), height=240, color="#7dd3fc")
         st.markdown("**Recall**")
-        st.bar_chart(df_all[["Recall"]].sort_values("Recall"), height=260, color="#fbbf24")
-
+        st.bar_chart(df_all[["Recall"]].sort_values("Recall"), height=240, color="#fbbf24")
     with col2:
         st.markdown("**Precision**")
-        st.bar_chart(df_all[["Precision"]].sort_values("Precision"), height=260, color="#a78bfa")
+        st.bar_chart(df_all[["Precision"]].sort_values("Precision"), height=240, color="#a78bfa")
         st.markdown("**F1-Score**")
-        st.bar_chart(df_all[["F1-Score"]].sort_values("F1-Score"), height=260, color="#34d399")
+        st.bar_chart(df_all[["F1-Score"]].sort_values("F1-Score"), height=240, color="#34d399")
 
     st.markdown("---")
+    st.markdown("#### Todas las metricas por modelo")
+    st.line_chart(df_all, height=320)
 
-    # Multi-line chart: todos los modelos, todas las métricas
-    st.markdown("#### Todas las métricas juntas por modelo")
-    st.line_chart(df_all, height=350)
-
-    # Selector de modelos para comparar 2
     st.markdown("---")
-    st.markdown("#### Comparar dos modelos directamente")
+    st.markdown("#### Comparar dos modelos")
     c1, c2 = st.columns(2)
     mod_a = c1.selectbox("Modelo A", modelos, index=0)
     mod_b = c2.selectbox("Modelo B", modelos, index=1)
@@ -252,102 +236,15 @@ elif seccion == "📈 Comparativa":
         mod_a: [da[m] for m in metricas],
         mod_b: [db[m] for m in metricas],
     }, index=labels)
-    st.bar_chart(df_duo, height=320)
+    st.bar_chart(df_duo, height=300)
 
-    # Diferencias
-    st.markdown("#### Diferencia (A − B)")
+    st.markdown("#### Diferencia (A - B)")
     diff_df = pd.DataFrame({
-        "Métrica": labels,
+        "Metrica": labels,
         "Diferencia": [round(da[m]-db[m], 4) for m in metricas],
-    }).set_index("Métrica")
-    st.dataframe(diff_df.style.format("{:.4f}")
-        .map(lambda v: "color: #34d399" if v > 0 else "color: #f87171"),
-        use_container_width=True)
-
-
-# ══════════════════════════════════════════════════════════════════
-# 🔬 ANÁLISIS CRÍTICO
-# ══════════════════════════════════════════════════════════════════
-elif seccion == "🔬 Análisis crítico":
-    st.markdown("## 🔬 Análisis crítico & conclusiones")
-
-    col1, col2 = st.columns([1.1, 1])
-
-    with col1:
-        st.markdown("### Hallazgos clave")
-        hallazgos = [
-            ("🏆", "#34d399", "Random Forest — mejor accuracy y precision",
-             "87.41% de accuracy y 71.43% de precision. Evita falsas alarmas pero pierde ~36 renuncias reales (recall bajo)."),
-            ("📊", "#fb923c", "Naive Bayes — mejor recall y F1-Score",
-             "60.87% de recall y F1 de 43.75%. Detecta más renuncias reales a costo de 54 falsas alarmas."),
-            ("⚖️", "#f87171", "Desbalance de clases es el principal reto",
-             "83.9% vs 16.1%. Infla el Accuracy y penaliza el Recall. Se recomienda SMOTE o ajuste de umbral."),
-            ("🔬", "#2dd4bf", "Gamma PYDRA — correcto pero O(n²)",
-             "Funcional y tolerante a valores perdidos, pero computacionalmente inviable para datasets grandes."),
-            ("💡", "#fbbf24", "Data Leakage identificado y documentado",
-             "Imputer y Scaler se ajustaron antes del split. Las métricas pueden ser ligeramente optimistas."),
-        ]
-        for icon, color, titulo, texto in hallazgos:
-            st.markdown(f"""<div style='background:#111827;border:1px solid #1e293b;
-                border-left:3px solid {color};border-radius:10px;padding:14px;margin-bottom:8px;'>
-                <b style='color:#e2e8f0;'>{icon} {titulo}</b><br>
-                <span style='color:#94a3b8;font-size:13px;'>{texto}</span>
-            </div>""", unsafe_allow_html=True)
-
-    with col2:
-        st.markdown("### Trade-off Precision vs Recall")
-        tradeoff_df = pd.DataFrame({
-            "Precision": [d["precision"] for d in RESULTADOS.values()],
-            "Recall":    [d["recall"] for d in RESULTADOS.values()],
-        }, index=RESULTADOS.keys())
-        st.scatter_chart(tradeoff_df, x="Recall", y="Precision", size=80, height=300)
-        st.caption("Cada punto es un modelo. Arriba-derecha = ideal. Naive Bayes tiene alto Recall; Random Forest alta Precision.")
-
-        st.markdown("### RF vs Naive Bayes")
-        rf, nb = RESULTADOS["Random Forest"], RESULTADOS["Naive Bayes"]
-        df_vs = pd.DataFrame({
-            "Random Forest": [rf["accuracy"], rf["precision"], rf["recall"], rf["f1"]],
-            "Naive Bayes":   [nb["accuracy"], nb["precision"], nb["recall"], nb["f1"]],
-        }, index=["Accuracy","Precision","Recall","F1-Score"])
-        st.bar_chart(df_vs, height=250)
-
-    st.markdown("---")
-    st.markdown("### Mejoras propuestas")
-    c1, c2, c3 = st.columns(3)
-    c1.markdown("""<div class='card' style='border-left:3px solid #7dd3fc;'>
-        <b style='color:#7dd3fc;'>Datos</b><br>
-        <span style='font-size:13px;color:#94a3b8;'>
-        · Aplicar SMOTE para balancear<br>
-        · Corregir data leakage<br>
-        · Validación cruzada k-fold
-        </span>
-    </div>""", unsafe_allow_html=True)
-    c2.markdown("""<div class='card' style='border-left:3px solid #34d399;'>
-        <b style='color:#34d399;'>Modelos</b><br>
-        <span style='font-size:13px;color:#94a3b8;'>
-        · GridSearchCV para hiperparámetros<br>
-        · Ajustar umbral a 0.30<br>
-        · Probar XGBoost / LightGBM
-        </span>
-    </div>""", unsafe_allow_html=True)
-    c3.markdown("""<div class='card' style='border-left:3px solid #a78bfa;'>
-        <b style='color:#a78bfa;'>Evaluación</b><br>
-        <span style='font-size:13px;color:#94a3b8;'>
-        · Agregar AUC-ROC<br>
-        · Curva Precision-Recall<br>
-        · Análisis de importancia de features
-        </span>
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown("---")
-    st.markdown("""<div style='background:#111827;border:1px solid #1e293b;border-left:3px solid #7dd3fc;
-        border-radius:10px;padding:20px;'>
-        <p style='font-family:Space Mono;font-size:10px;color:#7dd3fc;letter-spacing:2px;margin:0 0 8px;'>CONCLUSIÓN EQUIPO 12</p>
-        <p style='color:#cbd5e1;font-size:14px;line-height:1.8;margin:0;'>
-        <b>Random Forest</b> es el modelo recomendado como punto de partida por su alta precision.
-        <b>Naive Bayes</b> es preferible si detectar renuncias reales es prioritario sobre evitar falsas alarmas.
-        El mayor reto fue el <b>desbalance de clases</b>, que limitó el Recall de todos los modelos.
-        <b>KNN</b> y <b>Perceptrón</b> resultaron los más débiles. El clasificador <b>Gamma PYDRA</b>
-        demostró valor teórico pero es inviable en producción por su complejidad computacional.
-        </p>
-    </div>""", unsafe_allow_html=True)
+    }).set_index("Metrica")
+    st.dataframe(
+        diff_df.style.format("{:.4f}").map(lambda v: "color: #34d399" if v > 0 else "color: #f87171"),
+        use_container_width=True,
+        height=180,
+    )
