@@ -18,23 +18,23 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
-.stApp { background-color: #eef4fb; color: #1e3a5f; }
+.stApp { background-color: #ffffff; color: #1e3a5f; }
 section[data-testid="stSidebar"] { background-color: #daeaf7; border-right: 1px solid #b8d6ee; }
 section[data-testid="stSidebar"] * { color: #2c5f8a !important; }
 h1 { font-family: 'Space Mono', monospace; color: #1e3a5f !important; letter-spacing: -1px; }
 h2 { font-family: 'Space Mono', monospace; color: #2e7cbf !important; font-size: 1.15rem !important; }
-[data-testid="metric-container"] { background: #d6e9f8; border: 1px solid #a8cfed; border-radius: 12px; padding: 16px; }
+[data-testid="metric-container"] { background: #f0f7fd; border: 1px solid #b8d6ee; border-radius: 12px; padding: 16px; }
 [data-testid="metric-container"] label { color: #5a8ab0 !important; font-size: 12px !important; }
 [data-testid="metric-container"] [data-testid="stMetricValue"] { color: #1a5d96 !important; font-family: 'Space Mono', monospace; }
-.stTabs [data-baseweb="tab-list"] { background: #cce0f4; border-radius: 10px; padding: 4px; }
+.stTabs [data-baseweb="tab-list"] { background: #e8f3fb; border-radius: 10px; padding: 4px; }
 .stTabs [data-baseweb="tab"] { background: transparent; color: #5a8ab0; border-radius: 8px; font-size: 13px; }
 .stTabs [aria-selected="true"] { background: #8abfdf !important; color: #0d2d4e !important; }
 hr { border-color: #b8d6ee !important; }
-.card { background: #d6e9f8; border: 1px solid #a8cfed; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+.card { background: #f0f7fd; border: 1px solid #b8d6ee; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
 /* Texto general */
 p, span, div, li { color: #1e3a5f; }
 /* Dataframes */
-[data-testid="stDataFrame"] { background: #d6e9f8 !important; }
+[data-testid="stDataFrame"] { background: #f0f7fd !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -74,7 +74,7 @@ with st.sidebar:
 # ══════════════════════════════════════════════════════════════════
 if seccion == "Resumen general":
     st.markdown("""
-    <div style='background:linear-gradient(135deg,#c2dff5,#daeaf7);border:1px solid #a8cfed;border-radius:16px;padding:28px;margin-bottom:20px;'>
+    <div style='background:linear-gradient(135deg,#daeaf7,#eef6fc);border:1px solid #b8d6ee;border-radius:16px;padding:28px;margin-bottom:20px;'>
         <p style='font-family:Space Mono;font-size:10px;color:#2e7cbf;letter-spacing:3px;margin:0 0 6px;'>PRÁCTICA 09 · EQUIPO 12</p>
         <h1 style='font-size:1.8rem;margin:0 0 6px;color:#1e3a5f !important;'>Clasificadores de Rotación de Personal</h1>
         <p style='color:#5a8ab0;font-size:13px;margin:0;'>IBM HR Analytics · 8 modelos · Predicción de Attrition</p>
