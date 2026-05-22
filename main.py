@@ -18,19 +18,23 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
-.stApp { background-color: #0b0f1a; color: #e2e8f0; }
-section[data-testid="stSidebar"] { background-color: #111827; border-right: 1px solid #1e293b; }
-section[data-testid="stSidebar"] * { color: #94a3b8 !important; }
-h1 { font-family: 'Space Mono', monospace; color: #f8fafc !important; letter-spacing: -1px; }
-h2 { font-family: 'Space Mono', monospace; color: #7dd3fc !important; font-size: 1.15rem !important; }
-[data-testid="metric-container"] { background: #111827; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; }
-[data-testid="metric-container"] label { color: #64748b !important; font-size: 12px !important; }
-[data-testid="metric-container"] [data-testid="stMetricValue"] { color: #7dd3fc !important; font-family: 'Space Mono', monospace; }
-.stTabs [data-baseweb="tab-list"] { background: #111827; border-radius: 10px; padding: 4px; }
-.stTabs [data-baseweb="tab"] { background: transparent; color: #64748b; border-radius: 8px; font-size: 13px; }
-.stTabs [aria-selected="true"] { background: #1e3a5f !important; color: #7dd3fc !important; }
-hr { border-color: #1e293b !important; }
-.card { background: #111827; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+.stApp { background-color: #eef4fb; color: #1e3a5f; }
+section[data-testid="stSidebar"] { background-color: #daeaf7; border-right: 1px solid #b8d6ee; }
+section[data-testid="stSidebar"] * { color: #2c5f8a !important; }
+h1 { font-family: 'Space Mono', monospace; color: #1e3a5f !important; letter-spacing: -1px; }
+h2 { font-family: 'Space Mono', monospace; color: #2e7cbf !important; font-size: 1.15rem !important; }
+[data-testid="metric-container"] { background: #d6e9f8; border: 1px solid #a8cfed; border-radius: 12px; padding: 16px; }
+[data-testid="metric-container"] label { color: #5a8ab0 !important; font-size: 12px !important; }
+[data-testid="metric-container"] [data-testid="stMetricValue"] { color: #1a5d96 !important; font-family: 'Space Mono', monospace; }
+.stTabs [data-baseweb="tab-list"] { background: #cce0f4; border-radius: 10px; padding: 4px; }
+.stTabs [data-baseweb="tab"] { background: transparent; color: #5a8ab0; border-radius: 8px; font-size: 13px; }
+.stTabs [aria-selected="true"] { background: #8abfdf !important; color: #0d2d4e !important; }
+hr { border-color: #b8d6ee !important; }
+.card { background: #d6e9f8; border: 1px solid #a8cfed; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+/* Texto general */
+p, span, div, li { color: #1e3a5f; }
+/* Dataframes */
+[data-testid="stDataFrame"] { background: #d6e9f8 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -57,7 +61,7 @@ with st.sidebar:
         "Comparativa",
     ])
     st.markdown("---")
-    st.markdown("""<div style='font-size:12px;color:#475569;'>
+    st.markdown("""<div style='font-size:12px;color:#5a8ab0;'>
         <b>Equipo 12</b><br>
         Saul Fabila Domínguez<br>
         Sergio Iván Sánchez Portilla<br>
@@ -70,10 +74,10 @@ with st.sidebar:
 # ══════════════════════════════════════════════════════════════════
 if seccion == "Resumen general":
     st.markdown("""
-    <div style='background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #1e293b;border-radius:16px;padding:28px;margin-bottom:20px;'>
-        <p style='font-family:Space Mono;font-size:10px;color:#7dd3fc;letter-spacing:3px;margin:0 0 6px;'>PRÁCTICA 09 · EQUIPO 12</p>
-        <h1 style='font-size:1.8rem;margin:0 0 6px;'>Clasificadores de Rotación de Personal</h1>
-        <p style='color:#64748b;font-size:13px;margin:0;'>IBM HR Analytics · 8 modelos · Predicción de Attrition</p>
+    <div style='background:linear-gradient(135deg,#c2dff5,#daeaf7);border:1px solid #a8cfed;border-radius:16px;padding:28px;margin-bottom:20px;'>
+        <p style='font-family:Space Mono;font-size:10px;color:#2e7cbf;letter-spacing:3px;margin:0 0 6px;'>PRÁCTICA 09 · EQUIPO 12</p>
+        <h1 style='font-size:1.8rem;margin:0 0 6px;color:#1e3a5f !important;'>Clasificadores de Rotación de Personal</h1>
+        <p style='color:#5a8ab0;font-size:13px;margin:0;'>IBM HR Analytics · 8 modelos · Predicción de Attrition</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -92,10 +96,10 @@ if seccion == "Resumen general":
             "Clase": ["No renuncia (0)", "Renuncia (1)"],
             "Cantidad": [1233, 237],
         }).set_index("Clase")
-        st.bar_chart(clase_df, height=260, color="#7dd3fc")
-        st.markdown("""<div class='card' style='border-left:3px solid #fbbf24;'>
+        st.bar_chart(clase_df, height=260, color="#5ba3d9")
+        st.markdown("""<div class='card' style='border-left:3px solid #f4a94e;'>
             <b>Desbalance severo: 83.9% vs 16.1%</b><br>
-            <span style='color:#94a3b8;font-size:13px;'>La mayoría de modelos aprenden a predecir
+            <span style='color:#5a8ab0;font-size:13px;'>La mayoría de modelos aprenden a predecir
             "No renuncia" casi siempre, inflando el Accuracy pero perjudicando el Recall.</span>
         </div>""", unsafe_allow_html=True)
 
@@ -107,12 +111,12 @@ if seccion == "Resumen general":
             for m, d in RESULTADOS.items()
         ]).sort_values("F1-Score", ascending=False).reset_index(drop=True)
         df_rank.index += 1
-        st.bar_chart(df_rank.set_index("Modelo")[["F1-Score"]], height=260, color="#34d399")
+        st.bar_chart(df_rank.set_index("Modelo")[["F1-Score"]], height=260, color="#7ec8a4")
         st.dataframe(
             df_rank.style
                 .format({"Accuracy":"{:.4f}","Precision":"{:.4f}","Recall":"{:.4f}","F1-Score":"{:.4f}"})
-                .highlight_max(axis=0, color="#14432a")
-                .highlight_min(axis=0, color="#3d1010"),
+                .highlight_max(axis=0, color="#b7e4cc")
+                .highlight_min(axis=0, color="#f7c5c5"),
             use_container_width=True,
             height=320,
         )
@@ -146,7 +150,7 @@ elif seccion == "Explorar modelo":
             "Métrica": ["Accuracy", "Precision", "Recall", "F1-Score"],
             "Valor":   [d["accuracy"], d["precision"], d["recall"], d["f1"]],
         }).set_index("Métrica")
-        st.bar_chart(perfil_df, height=300, color="#7dd3fc")
+        st.bar_chart(perfil_df, height=300, color="#5ba3d9")
 
         st.markdown("#### Desglose de predicciones")
         tp, fp, fn, tn = d["tp"], d["fp"], d["fn"], d["tn"]
@@ -154,7 +158,7 @@ elif seccion == "Explorar modelo":
             "Categoria": ["Verdadero Positivo (TP)", "Verdadero Negativo (TN)", "Falso Positivo (FP)", "Falso Negativo (FN)"],
             "Cantidad":  [tp, tn, fp, fn],
         }).set_index("Categoria")
-        st.bar_chart(breakdown_df, height=260, color="#7dd3fc")
+        st.bar_chart(breakdown_df, height=260, color="#5ba3d9")
 
     with col2:
         st.markdown("#### Matriz de confusion")
@@ -176,7 +180,7 @@ elif seccion == "Explorar modelo":
                     "Modelo": list(RESULTADOS.keys()),
                     "Valor":  [RESULTADOS[m][met] for m in RESULTADOS],
                 }).sort_values("Valor", ascending=False).set_index("Modelo")
-                st.bar_chart(df_met, height=250, color="#7dd3fc")
+                st.bar_chart(df_met, height=250, color="#5ba3d9")
                 val_sel = RESULTADOS[modelo_sel][met]
                 rank = sorted([RESULTADOS[m][met] for m in RESULTADOS], reverse=True).index(val_sel) + 1
                 st.caption(f"{modelo_sel} ocupa el puesto #{rank} con {val_sel:.4f}")
@@ -199,8 +203,8 @@ elif seccion == "Comparativa":
     st.dataframe(
         df_all.sort_values("F1-Score", ascending=False)
             .style.format("{:.4f}")
-            .highlight_max(axis=0, color="#14432a")
-            .highlight_min(axis=0, color="#3d1010"),
+            .highlight_max(axis=0, color="#b7e4cc")
+            .highlight_min(axis=0, color="#f7c5c5"),
         use_container_width=True,
         height=330,
     )
@@ -210,14 +214,14 @@ elif seccion == "Comparativa":
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("**Accuracy**")
-        st.bar_chart(df_all[["Accuracy"]].sort_values("Accuracy"), height=240, color="#7dd3fc")
+        st.bar_chart(df_all[["Accuracy"]].sort_values("Accuracy"), height=240, color="#5ba3d9")
         st.markdown("**Recall**")
-        st.bar_chart(df_all[["Recall"]].sort_values("Recall"), height=240, color="#fbbf24")
+        st.bar_chart(df_all[["Recall"]].sort_values("Recall"), height=240, color="#f4a94e")
     with col2:
         st.markdown("**Precision**")
-        st.bar_chart(df_all[["Precision"]].sort_values("Precision"), height=240, color="#a78bfa")
+        st.bar_chart(df_all[["Precision"]].sort_values("Precision"), height=240, color="#b49de8")
         st.markdown("**F1-Score**")
-        st.bar_chart(df_all[["F1-Score"]].sort_values("F1-Score"), height=240, color="#34d399")
+        st.bar_chart(df_all[["F1-Score"]].sort_values("F1-Score"), height=240, color="#7ec8a4")
 
     st.markdown("---")
     st.markdown("#### Todas las metricas por modelo")
@@ -244,7 +248,7 @@ elif seccion == "Comparativa":
         "Diferencia": [round(da[m]-db[m], 4) for m in metricas],
     }).set_index("Metrica")
     st.dataframe(
-        diff_df.style.format("{:.4f}").map(lambda v: "color: #34d399" if v > 0 else "color: #f87171"),
+        diff_df.style.format("{:.4f}").map(lambda v: "color: #2e7a4f" if v > 0 else "color: #c0392b"),
         use_container_width=True,
         height=180,
     )
