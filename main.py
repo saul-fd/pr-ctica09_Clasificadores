@@ -98,7 +98,7 @@ if seccion == "Resumen general":
         }).set_index("Clase")
         st.bar_chart(clase_df, height=260, color="#5ba3d9")
         st.markdown("""<div class='card' style='border-left:3px solid #f4a94e;'>
-            <b>Desbalance severo: 83.9% vs 16.1%</b><br>
+            <b>Desbalance: 83.9% vs 16.1%</b><br>
             <span style='color:#5a8ab0;font-size:13px;'>La mayoría de modelos aprenden a predecir
             "No renuncia" casi siempre, inflando el Accuracy pero perjudicando el Recall.</span>
         </div>""", unsafe_allow_html=True)
